@@ -1,3 +1,4 @@
+//The Robustness of code
 struct ListNode {
     int m_nValue;
     ListNode* m_pnext;
@@ -12,6 +13,39 @@ ListNode* FindKthToTail(ListNode* pListHead, unsigned int k) {
     
     for (unsigned int i = 0; i < k-1; ++i) {
         pAhead = pAhead->m_pnext;
+    }
+    pBheind = pListHead;
+    while (pAhead->m_pnext!=NULL) {
+        pAhead = pAhead->m_pnext;
+        pBheind = pBheind->m_pnext;
+    }
+    
+    return pBheind;
+}
+
+//The problem with the above code:
+//1) if head is NULL, the code will try to visit empty memory
+//2)if the number of the list is smaller than k, somewhere there will be a NULL pointer
+//3) if k =0,k-1 will be 0Xffffffff, the code will excutes really lots of lots time!
+
+
+//Robust version
+ListNode* FindKthToTail2(ListNode* pListHead, unsigned int k) {
+    if (pListHead==NULL || k == 0) {
+        return NULL;
+    }
+    
+    ListNode* pAhead = pListHead;
+    ListNode* pBheind = NULL;
+    
+    for (unsigned int i = 0; i < k-1; ++i) {
+        if (pAhead->m_pnext!=NULL) {
+             pAhead = pAhead->m_pnext;
+        }
+        else
+            return NULL;
+        
+       
     }
     pBheind = pListHead;
     while (pAhead->m_pnext!=NULL) {
