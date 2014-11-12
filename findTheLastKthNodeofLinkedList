@@ -1,0 +1,23 @@
+struct ListNode {
+    int m_nValue;
+    ListNode* m_pnext;
+};
+
+//move the fast k - 1 steps;
+//the second time when fast points to the last one, the slow points to the last kth
+
+ListNode* FindKthToTail(ListNode* pListHead, unsigned int k) {
+    ListNode* pAhead = pListHead;
+    ListNode* pBheind = NULL;
+    
+    for (unsigned int i = 0; i < k-1; ++i) {
+        pAhead = pAhead->m_pnext;
+    }
+    pBheind = pListHead;
+    while (pAhead->m_pnext!=NULL) {
+        pAhead = pAhead->m_pnext;
+        pBheind = pBheind->m_pnext;
+    }
+    
+    return pBheind;
+}
